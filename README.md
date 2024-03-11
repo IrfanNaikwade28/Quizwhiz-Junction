@@ -1,4 +1,4 @@
---Quiz application name Quizwhiz Junction--
+--QuizWhiz Junction - PHP-based Interactive Quiz Platform--
 
 QuizWhiz Junction is a dynamic and user-friendly quiz application developed in PHP, 
 designed to offer an immersive quiz-taking experience for users of all ages and interests. 
