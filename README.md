@@ -1,7 +1,12 @@
---QuizWhiz Junction - PHP-based Interactive Quiz Platform--
-
-QuizWhiz Junction is a dynamic and user-friendly quiz application developed in PHP, 
-designed to offer an immersive quiz-taking experience for users of all ages and interests. 
-With its robust features and intuitive interface, QuizWhiz Junction aims to revolutionize 
-the way people engage with quizzes, providing a platform for learning, entertainment, and 
-friendly competition.
+![image-001](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/cbef5160-05e6-44e4-ac38-09d10441646f)
+![image-002](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/de8804e5-e3b6-40d1-872f-606436689c64)
+![image-003](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/715a026e-9ccc-45a9-94b4-5772a173219f)
+![image-004](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/e8e35796-7faf-468f-b8b4-0664d2018fa3)
+![image-005](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/a10093d2-6fe2-4b1b-b03e-a7cc85a7efdb)
+![image-006](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/bd30ce15-b3a0-4d18-a5c4-fba16254204d)
+![image-007](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/a99e83be-1e26-43be-966c-fc7b60713424)
+![image-008](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/1b63818e-f801-4400-9d11-49a86c87e8ca)
+![image-009](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/6f604129-180f-4735-81c6-c688cca24c05)
+![image-010](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/a35a997e-fbbc-470e-805e-c9488132362a)
+![image-011](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/67f6c344-c7e1-4abe-844e-71e93f6b6347)
+![image-012](https://github.com/IrfanNaikwade28/Quizwhiz-Junction/assets/106756605/6b1ca17c-e7db-475a-b354-f5d0178f4e3a)
