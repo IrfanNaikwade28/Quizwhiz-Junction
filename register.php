@@ -1,40 +1,37 @@
 <?php
-	include("database.php");
-	session_start();
-	
-	if(isset($_POST['submit']))
-	{	
-		$name = $_POST['name'];
-		$name = stripslashes($name);
-		$name = addslashes($name);
+require_once __DIR__.'/database.php';
+require_once __DIR__.'/lib/Init.php';
+require_once __DIR__.'/lib/Auth.php';
+require_once __DIR__.'/lib/Helpers.php';
 
-		$email = $_POST['email'];
-		$email = stripslashes($email);
-		$email = addslashes($email);
+Init::startSession();
+$error = '';
 
-		$password = $_POST['password'];
-		$password = stripslashes($password);
-		$password = addslashes($password);
-
-		$college = $_POST['college'];
-		$college = stripslashes($college);
-		$college = addslashes($college);
-		$str="SELECT email from user WHERE email='$email'";
-		$result=mysqli_query($con,$str);
-		
-		if((mysqli_num_rows($result))>0)	
-		{
-            echo "<center><h3><script>alert('Sorry.. This email is already registered !!');</script></h3></center>";
-            header("refresh:0;url=login.php");
-        }
-		else
-		{
-            $str="insert into user set name='$name',email='$email',password='$password',college='$college'";
-			if((mysqli_query($con,$str)))	
-			echo "<center><h3><script>alert('Congrats.. You have successfully registered !!');</script></h3></center>";
-			header('location: welcome.php?q=1');
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+		$name = trim((string)($_POST['name'] ?? ''));
+		$email = trim((string)($_POST['email'] ?? ''));
+		$password = (string)($_POST['password'] ?? '');
+		$college = trim((string)($_POST['college'] ?? ''));
+		if ($name === '' || $email === '' || $password === '' || $college === '') {
+			$error = 'All fields are required.';
+		} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$error = 'Please enter a valid email address.';
+		} else {
+			try {
+				$user = Auth::registerUser($name, $email, $password, $college);
+				if ($user) {
+					// Auto-login
+					Auth::loginUser($email, $password);
+					header('Location: welcome.php?q=1');
+					exit;
+				} else {
+					$error = 'Email already registered or invalid input.';
+				}
+			} catch (Throwable $e) {
+				$error = 'Registration failed. Please try again.';
+			}
 		}
-    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -65,6 +62,9 @@
 						<div class="box-body">
 							<center> <h5 style="font-family: Noto Sans;">Register to </h5><h4 style="font-family: Noto Sans;">Online Quiz System</h4></center><br>
 							<form method="post" action="register.php" enctype="multipart/form-data">
+								<?php if (!empty($error)): ?>
+									<div class="alert alert-danger" role="alert"><?php echo Helpers::e($error); ?></div>
+								<?php endif; ?>
                                 <div class="form-group">
 									<label>Enter Your Username:</label>
 									<input type="text" name="name" class="form-control" required />
@@ -81,6 +81,7 @@
 									<label>Enter Your College Name:</label>
 									<input type="text" name="college" class="form-control" required />
 								</div>
+                                
                                 
 								<div class="form-group text-right">
 									<button class="btn btn-primary btn-block" name="submit">Register</button>

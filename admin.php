@@ -1,45 +1,30 @@
 <?php
-    include_once 'database.php';
-    session_start();
-    if(isset($_SESSION["email"]))
-	{
-		session_destroy();
-    }
-    
-    $ref=@$_GET['q'];
-    if(isset($_POST['submit']))
-	{	
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+require_once __DIR__.'/database.php';
+require_once __DIR__.'/lib/Init.php';
+require_once __DIR__.'/lib/Auth.php';
+require_once __DIR__.'/lib/Helpers.php';
+                                
+Init::startSession();
+if (isset($_SESSION['email'])) {
+	Init::destroy();
+	Init::startSession();
+}
 
-        $email = stripslashes($email);
-        $email = addslashes($email);
-        $password = stripslashes($password); 
-        $password = addslashes($password);
-
-        $email = mysqli_real_escape_string($con,$email);
-        $password = mysqli_real_escape_string($con,$password);
-        
-        $result = mysqli_query($con,"SELECT email FROM admin WHERE email = '$email' and password = '$password'") or die('Error');
-        $count=mysqli_num_rows($result);
-        if($count==1)
-        {
-            session_start();
-            if(isset($_SESSION['email']))
-            {
-                session_unset();
-            }
-            $_SESSION["name"] = 'Admin';
-            $_SESSION["key"] ='admin';
-            $_SESSION["email"] = $email;
-            header("location:dashboard.php?q=1");
-        }
-        else
-        {
-            echo "<center><h3><script>alert('Sorry.. Wrong Username (or) Password');</script></h3></center>";
-            header("refresh:1;url=admin.php");
-        }
-    }
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+		$email = trim((string)($_POST['email'] ?? ''));
+		$password = (string)($_POST['password'] ?? '');
+		if ($email === '' || $password === '') {
+			$error = 'Email and password are required.';
+		} else {
+			if (Auth::loginAdmin($email, $password)) {
+				header('Location: dashboard.php?q=1');
+				exit;
+			} else {
+				$error = 'Invalid admin credentials.';
+			}
+		}
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,16 +54,20 @@
 						<div class="box-body">
 						<center> <h5 style="font-family: Noto Sans;">Login to </h5><h4 style="font-family: Noto Sans;">Admin Page</h4></center><br>
 							<form method="post" action="admin.php" enctype="multipart/form-data">
+								<?php if (!empty($error)): ?>
+									<div class="alert alert-danger" role="alert"><?php echo Helpers::e($error); ?></div>
+								<?php endif; ?>
 								<div class="form-group">
 									<label>Enter Your Email Id:</label>
-									<input type="email" name="email" class="form-control">
+									<input type="email" name="email" class="form-control" required>
 								</div>
 								<div class="form-group">
 									<label class="fw">Enter Your Password:
 										<a href="javascript:void(0)" class="pull-right">Forgot Password?</a>
 									</label>
-									<input type="password" name="password" class="form-control">
+									<input type="password" name="password" class="form-control" required>
 								</div> 
+                                
 								<div class="form-group text-right">
 									<button class="btn btn-primary btn-block" name="submit">Login</button>
 								</div>

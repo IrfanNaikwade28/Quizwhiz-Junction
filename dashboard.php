@@ -1,13 +1,14 @@
 <?php
 include_once 'database.php';
 session_start();
-if (!(isset($_SESSION['email']))) {
-    header("location:login.php");
-} else {
-    $name = $_SESSION['name'];
-    $email = $_SESSION['email'];
-    include_once 'database.php';
+// Admin-only access
+if (!isset($_SESSION['email']) || !(isset($_SESSION['role']) && $_SESSION['role'] === 'admin') && (!isset($_SESSION['key']) || $_SESSION['key'] !== 'suryapinky')) {
+    header("Location: admin.php");
+    exit;
 }
+$name = $_SESSION['name'];
+$email = $_SESSION['email'];
+include_once 'database.php';
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +80,7 @@ if (!(isset($_SESSION['email']))) {
                             $college = $row['college'];
                         }
                         $c++;
-                        echo '<tr><td style="color:#99cc32"><center><b>' . $c . '</b></center></td><td><center>' . $e . '</center></td><td><center>' . $s . '</center></td>';
+                        echo '<tr><td style="color:#99cc32"><center><b>' . htmlspecialchars((string)$c, ENT_QUOTES) . '</b></center></td><td><center>' . htmlspecialchars($e, ENT_QUOTES) . '</center></td><td><center>' . htmlspecialchars((string)$s, ENT_QUOTES) . '</center></td>';
                     }
                     echo '</table></div></div>';
                 }
@@ -94,7 +95,12 @@ if (!(isset($_SESSION['email']))) {
                         $name = $row['name'];
                         $email = $row['email'];
                         $college = $row['college'];
-                        echo '<tr><td><center>' . $c++ . '</center></td><td><center>' . $name . '</center></td><td><center>' . $college . '</center></td><td><center>' . $email . '</center></td><td><center><a title="Delete User" href="update.php?demail=' . $email . '"><b><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></b></a></center></td></tr>';
+                        echo '<tr><td><center>' . htmlspecialchars((string)$c++, ENT_QUOTES) . '</center></td><td><center>' . htmlspecialchars($name, ENT_QUOTES) . '</center></td><td><center>' . htmlspecialchars($college, ENT_QUOTES) . '</center></td><td><center>' . htmlspecialchars($email, ENT_QUOTES) . '</center></td><td><center>
+                        <form method="post" action="update.php?demail=1" style="display:inline" onsubmit="return confirm(\'Delete user and related data?\')">
+                            <input type="hidden" name="demail" value="' . htmlspecialchars($email, ENT_QUOTES) . '">
+                            <button type="submit" class="btn btn-link" title="Delete User"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                        </form>
+                        </center></td></tr>';
                     }
                     $c = 0;
                     echo '</table></div></div>';
@@ -105,7 +111,7 @@ if (!(isset($_SESSION['email']))) {
                 if (@$_GET['q'] == 4 && !(@$_GET['step'])) {
                     echo '<div class="row"><span class="title1" style="margin-left:40%;font-size:30px;color:#fff;"><b>Enter Quiz Details</b></span><br /><br />
                         <div class="col-md-3"></div><div class="col-md-6">   
-                        <form class="form-horizontal title1" name="form" action="update.php?q=addquiz"  method="POST">
+            <form class="form-horizontal title1" name="form" action="update.php?q=addquiz"  method="POST">
                             <fieldset>
                                 <div class="form-group">
                                     <label class="col-md-12 control-label" for="name"></label>  
@@ -154,6 +160,7 @@ if (!(isset($_SESSION['email']))) {
                         <span class="title1" style="margin-left:40%;font-size:30px;"><b>Enter Question Details</b></span><br /><br />
                         <div class="col-md-3"></div><div class="col-md-6"><form class="form-horizontal title1" name="form" action="update.php?q=addqns&n=' . @$_GET['n'] . '&eid=' . @$_GET['eid'] . '&ch=4 "  method="POST">
                         <fieldset>
+                        
                         ';
 
                     for ($i = 1; $i <= @$_GET['n']; $i++) {
@@ -220,8 +227,13 @@ if (!(isset($_SESSION['email']))) {
                         $total = $row['total'];
                         $sahi = $row['sahi'];
                         $eid = $row['eid'];
-                        echo '<tr><td><center>' . $c++ . '</center></td><td><center>' . $title . '</center></td><td><center>' . $total . '</center></td><td><center>' . $sahi * $total . '</center></td>
-                            <td><center><b><a href="update.php?q=rmquiz&eid=' . $eid . '" class="pull-right btn sub1" style="margin:0px;background:red;color:black"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Remove</b></span></a></b></center></td></tr>';
+                        echo '<tr><td><center>' . htmlspecialchars((string)$c++, ENT_QUOTES) . '</center></td><td><center>' . htmlspecialchars($title, ENT_QUOTES) . '</center></td><td><center>' . htmlspecialchars((string)$total, ENT_QUOTES) . '</center></td><td><center>' . htmlspecialchars((string)($sahi * $total), ENT_QUOTES) . '</center></td>
+                            <td><center>
+                            <form method="post" action="update.php?q=rmquiz" style="display:inline" onsubmit="return confirm(\'Remove quiz and all related data?\')">
+                                <input type="hidden" name="eid" value="' . htmlspecialchars($eid, ENT_QUOTES) . '">
+                                <button type="submit" class="pull-right btn sub1" style="margin:0px;background:red;color:black"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Remove</b></span></button>
+                            </form>
+                            </center></td></tr>';
                     }
                     $c = 0;
                     echo '</table></div></div>';

@@ -289,9 +289,7 @@ CREATE TABLE `rank` (
 --
 -- Dumping data for table `rank`
 --
-
-INSERT INTO `rank` (`email`, `score`, `time`) VALUES
-();
+-- (no initial rows)
 
 -- --------------------------------------------------------
 

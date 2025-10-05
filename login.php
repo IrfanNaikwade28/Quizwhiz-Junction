@@ -1,40 +1,32 @@
 <?php
-	require('database.php');
-	session_start();
-	if(isset($_SESSION["email"]))
-	{
-		session_destroy();
-	}
-	
-	$ref=@$_GET['q'];		
-	if(isset($_POST['submit']))
-	{	
-		$email = $_POST['email'];
-		$pass = $_POST['password'];
-		$email = stripslashes($email);
-		$email = addslashes($email);
-		$pass = stripslashes($pass); 
-		$pass = addslashes($pass);
-		$email = mysqli_real_escape_string($con,$email);
-		$pass = mysqli_real_escape_string($con,$pass);					
-		$str = "SELECT * FROM user WHERE email='$email' and password='$pass'";
-		$result = mysqli_query($con,$str);
-		if((mysqli_num_rows($result))!=1) 
-		{
-			echo "<center><h3><script>alert('Sorry.. Wrong Username (or) Password');</script></h3></center>";
-			header("refresh:0;url=login.php");
-		}
-		else
-		{
-			$_SESSION['logged']=$email;
-			$row=mysqli_fetch_array($result);
-			$_SESSION['name']=$row[1];
-			$_SESSION['id']=$row[0];
-			$_SESSION['email']=$row[2];
-			$_SESSION['password']=$row[3];
-			header('location: welcome.php?q=1'); 					
+require_once __DIR__.'/database.php';
+require_once __DIR__.'/lib/Init.php';
+require_once __DIR__.'/lib/Auth.php';
+require_once __DIR__.'/lib/Helpers.php';
+
+Init::startSession();
+if (isset($_SESSION['email'])) {
+    // Log out existing session to show login form cleanly
+    Init::destroy();
+    Init::startSession();
+}
+
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+	$email = trim((string)($_POST['email'] ?? ''));
+	$pass  = (string)($_POST['password'] ?? '');
+	if ($email === '' || $pass === '') {
+		$error = 'Email and password are required.';
+	} else {
+		$user = Auth::loginUser($email, $pass);
+		if ($user) {
+			header('Location: welcome.php?q=1');
+			exit;
+		} else {
+			$error = 'Invalid email or password.';
 		}
 	}
+}
 ?>
 
 <!DOCTYPE html>
@@ -65,15 +57,19 @@
 						<div class="box-body">
 						<center> <h5 style="font-family: Noto Sans;">Login to </h5><h4 style="font-family: Noto Sans;">Online Quiz System</h4></center><br>
 							<form method="post" action="login.php" enctype="multipart/form-data">
+								<?php if (!empty($error)): ?>
+									<div class="alert alert-danger" role="alert"><?php echo Helpers::e($error); ?></div>
+								<?php endif; ?>
 								<div class="form-group">
 									<label>Enter Your Email Id:</label>
-									<input type="email" name="email" class="form-control">
+									<input type="email" name="email" class="form-control" required>
 								</div>
 								<div class="form-group">
 									<label class="fw">Enter Your Password:
 									</label>
-									<input type="password" name="password" class="form-control">
+									<input type="password" name="password" class="form-control" required>
 								</div> 
+                                
 								<div class="form-group text-right">
 									<button class="btn btn-primary btn-block" name="submit">Login</button>
 								</div>
