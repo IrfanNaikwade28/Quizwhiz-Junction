@@ -45,6 +45,9 @@ try {
     $r = $db->fetchOne('SELECT `email` FROM `rank` WHERE `email` = ?', [$uemail]);
     out('Admin delete user', !$u && !$h && !$r);
 
+    // Clean up temporary quiz inserted for this test to avoid leaving 'Tmp' in real data
+    $db->run('DELETE FROM quiz WHERE eid = ?', [$eidTmp]);
+
     // 2) Admin remove quiz route
     $eid = uniqid('Z');
     $db->run('INSERT INTO quiz(eid, title, sahi, wrong, total, date) VALUES(?,?,?,?,?, NOW())', [$eid, 'Remove Me', 1, 0, 1]);

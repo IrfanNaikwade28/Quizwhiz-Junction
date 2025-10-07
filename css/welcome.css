@@ -1,50 +1,158 @@
+/* Glassmorphism redesign for dark gradient theme */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  /* New palette: 3C467B, 50589C, 636CCB, 6E8CFB */
+  --bg-grad: linear-gradient(135deg, #3C467B, #50589C, #636CCB);
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --text-primary: #fff;
+  --text-secondary: #e6e9ff;
+  --accent-start: #636CCB;
+  --accent-end: #6E8CFB;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--text-secondary);
+  background: var(--bg-grad) fixed;
+  background-attachment: fixed;
+}
+
+/* Panels: apply frosted glass look */
+.panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.panel.title, .leaderboard-panel { padding: 16px; }
+
+/* Leaderboard table */
+.leaderboard-table {
+  width: 100%;
+  color: var(--text-secondary);
+}
+.leaderboard-table tr td, .leaderboard-table tr th { border: none !important; background: transparent !important; }
+.leaderboard-table.table-striped>tbody>tr:nth-of-type(odd),
+.leaderboard-table.table-striped>tbody>tr:nth-of-type(even),
+.leaderboard-table>tbody>tr,
+.leaderboard-table>thead>tr { background-color: transparent !important; }
+.leaderboard-table tr:hover { background: rgba(255, 255, 255, 0.05); transition: background 160ms ease; }
+
+.leaderboard-head td, .leaderboard-head th {
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: var(--text-primary) !important;
+}
+
+/* Top rank highlight */
+.leaderboard-table tr.is-top td {
+  color: var(--text-primary);
+  text-shadow: 0 0 8px rgba(156, 39, 176, 0.5), 0 0 12px rgba(0, 188, 212, 0.35);
+}
+
+/* Subtle lift on hover for rows/cards */
+.leaderboard-table tr { transition: transform 160ms ease, background 160ms ease; }
+.leaderboard-table tr:hover { transform: scale(1.005); }
+
+/* Buttons and chips harmonize with theme */
+.btn { border-radius: 14px; }
+.btn.btn-primary {
+  background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+  border: none;
+}
+.label-info {
+  background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+}
+
+/* Danger button theme (unify across pages) */
+.btn.btn-danger {
+  background: #e53935 !important;
+  border-color: #e53935 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.btn.btn-danger:hover,
+.btn.btn-danger:focus,
+.btn.btn-danger:active,
+.btn.btn-danger:active:hover {
+  background: #c62828 !important;
+  border-color: #c62828 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+/* Typography tweaks */
+.title1, .title1 b, .title1 strong, h1, h2, h3, h4 { color: var(--text-primary); }
+.glyphicon { color: var(--text-secondary); }
+
+/* Make bootstrap table transparent to show glass backdrop */
+.table { background: transparent !important; }
+.table>thead>tr>th,
+.table>tbody>tr>td,
+.table>tfoot>tr>td { background: transparent !important; }
+/* Neutralize Bootstrap stripes app-wide to avoid white bands */
+.table.table-striped>tbody>tr:nth-of-type(odd),
+.table.table-striped>tbody>tr:nth-of-type(even) { background-color: transparent !important; }
+/* Ensure rows themselves are transparent, not just cells */
+.table>tbody>tr,
+.table>thead>tr,
+.table>tfoot>tr { background-color: transparent !important; }
+
+/* Make any legacy title1 background transparent */
+.title1 { background: transparent !important; }
+
 * {box-sizing: border-box;}
 
+
+/* Overrides for legacy styles to keep the glass theme consistent */
 body { 
-  background-color: #0b9164;
+  background: var(--bg-grad) fixed !important;
   margin: 0;
-  font-family: Noto Sans;
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif !important;
 }
-
-.header {
-  text-align: center;
-  overflow: hidden;
-  background-color: #0b9164;
-  padding: 20px 10px;
-  text-decoration: none;
-}
-
-.header a, .header .logo {
-  color: rgb(255, 255, 255);
-  text-align: center;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px; 
-  line-height: 10px;
-  border-radius: 4px;
-}
-
-.header .logo {
-  color:#fff;
-  font-size: 25px;
-  font-weight: bold;
-}
-
-@media screen and (max-width: 500px) {
-  .header a {
-    font-size: 15px;
-    display: inherit;
-    text-align: left;
-  }
-  .header-right {
-    padding-top: 10%;
-      font-size: 15px;
-    float: none;
-  }
-}
+.header { background: transparent !important; }
 .panel{
-  border-color:rgb(0, 0, 0);
-  margin:40px;
-  padding:20px;
-  font: 15px "Noto Sans";
-  }
+  border-color: var(--glass-border) !important;
+  margin: 40px;
+  padding: 20px;
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--glass-bg) !important;
+  background-clip: padding-box;
+  border-radius: 20px !important;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+
+/* Hide horizontal scrollbars inside table containers on large screens */
+.table-responsive { overflow-x: hidden; }
+.table-responsive::-webkit-scrollbar { display: none; }
+.table-responsive { -ms-overflow-style: none; scrollbar-width: none; /* Firefox only; safe to ignore in WebKit */ }
+
+/* Also target Bootstrap defaults if present */
+.panel-default { background: var(--glass-bg) !important; border-color: var(--glass-border) !important; }
+
+/* Subtle inner border glow */
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+}
+
+/* Backdrop-filter fallback: simulate blur by layering gradient if blur unsupported */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .panel { background: rgba(255,255,255,0.08) !important; }
+}

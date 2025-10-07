@@ -23,7 +23,7 @@
     <link  rel="stylesheet" href="css/bootstrap.min.css"/>
     <link  rel="stylesheet" href="css/bootstrap-theme.min.css"/>    
     <link rel="stylesheet" href="css/welcome.css">
-    <link  rel="stylesheet" href="css/font.css">
+        <!-- <link  rel="stylesheet" href="css/font.css"> -->
     <link rel="stylesheet" href="css/navbar.css">
     <link
     rel="stylesheet"
@@ -31,15 +31,7 @@
   />
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js"  type="text/javascript"></script>
-    <style>
-        body{
-            background: url('image/bgImg.jpg');
-    		background-repeat: no-repeat;
-			background-position: center;
-			background-size:cover;
-            height: 100vh;
-        }
-    </style>
+    
 </head>
 <body>
     <header>
@@ -68,8 +60,8 @@
                 <?php if(@$_GET['q']==1) 
                 {
                     $result = mysqli_query($con,"SELECT * FROM quiz ORDER BY date DESC") or die('Error');
-                    echo  '<div class="panel"><div class="table-responsive"><table class="table table-striped title1">
-                    <tr><td><center><b>S.N.</b></center></td><td><center><b>Topic</b></center></td><td><center><b>Total question</b></center></td><td><center><b>Marks</center></b></td><td><center><b>Action</b></center></td></tr>';
+                        echo  '<div class="panel"><div class="table-responsive"><table class="table leaderboard-table title1">
+                    <tr class="leaderboard-head"><td><center><b>S.N.</b></center></td><td><center><b>Topic</b></center></td><td><center><b>Total question</b></center></td><td><center><b>Marks</center></b></td><td><center><b>Action</b></center></td></tr>';
                     $c=1;
                     while($row = mysqli_fetch_array($result)) {
                         $title = $row['title'];
@@ -79,15 +71,15 @@
                     $q12=mysqli_query($con,"SELECT score FROM history WHERE eid='$eid' AND email='$email'" )or die('Error98');
                     $rowcount=mysqli_num_rows($q12);	
                     if($rowcount == 0){
-                        echo '<tr><td><center>'.htmlspecialchars((string)$c++, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars($title, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars((string)$total, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars((string)($sahi*$total), ENT_QUOTES).'</center></td><td><center><b><a href="welcome.php?q=quiz&step=2&eid='.urlencode($eid).'&n=1&t='.urlencode((string)$total).'" class="btn sub1" style="color:black;margin:0px;background:#1de9b6"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Start</b></span></a></b></center></td></tr>';
+                        echo '<tr><td><center>'.htmlspecialchars((string)$c++, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars($title, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars((string)$total, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars((string)($sahi*$total), ENT_QUOTES).'</center></td><td><center><b><a href="welcome.php?q=quiz&step=2&eid='.urlencode($eid).'&n=1&t='.urlencode((string)$total).'" class="btn btn-primary sub1"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Start</b></span></a></b></center></td></tr>';
                     }
                     else
                     {
-                    echo '<tr style="color:#99cc32"><td><center>'.htmlspecialchars((string)$c++, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars($title, ENT_QUOTES).'&nbsp;<span title="This quiz is already solve by you" class="glyphicon glyphicon-ok" aria-hidden="true"></span></center></td><td><center>'.htmlspecialchars((string)$total, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars((string)($sahi*$total), ENT_QUOTES).'</center></td><td><center>
+                    echo '<tr><td><center>'.htmlspecialchars((string)$c++, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars($title, ENT_QUOTES).'&nbsp;<span title="This quiz is already solve by you" class="glyphicon glyphicon-ok" aria-hidden="true"></span></center></td><td><center>'.htmlspecialchars((string)$total, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars((string)($sahi*$total), ENT_QUOTES).'</center></td><td><center>
                     <form method="post" action="update.php?q=quizre&step=25" style="display:inline" onsubmit="return confirm(&quot;Restart this quiz? Your current attempt score will be removed from the leaderboard.&quot;)">
                         <input type="hidden" name="eid" value="'.htmlspecialchars($eid, ENT_QUOTES).'">
                         <input type="hidden" name="t" value="'.htmlspecialchars((string)$total, ENT_QUOTES).'">
-                        <button type="submit" class="pull-right btn sub1" style="color:black;margin:0px;background:red"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Restart</b></span></button>
+                        <button type="submit" class="pull-right btn btn-danger sub1"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Restart</b></span></button>
                     </form>
                     </center></td></tr>';
                     }
@@ -158,8 +150,8 @@
                     {
                         $eid=@$_GET['eid'];
                         $q=mysqli_query($con,"SELECT * FROM history WHERE eid='$eid' AND email='$email' " )or die('Error157');
-                        echo  '<div class="panel">
-                        <center><h1 class="title" style="color:#660033">Result</h1><center><br /><table class="table table-striped title1" style="font-size:20px;font-weight:1000;">';
+                        echo  '<div class="panel leaderboard-panel">
+                        <center><h1 class="title">Result</h1><center><br /><table class="table table-striped title1" style="font-size:20px;font-weight:1000;">';
 
                         while($row=mysqli_fetch_array($q) )
                         {
@@ -167,16 +159,16 @@
                             $w=$row['wrong'];
                             $r=$row['sahi'];
                             $qa=$row['level'];
-                            echo '<tr style="color:#66CCFF"><td>Total Questions</td><td>'.htmlspecialchars((string)$qa, ENT_QUOTES).'</td></tr>
-                                <tr style="color:#99cc32"><td>right Answer&nbsp;<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></td><td>'.htmlspecialchars((string)$r, ENT_QUOTES).'</td></tr> 
-                                <tr style="color:red"><td>Wrong Answer&nbsp;<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></td><td>'.htmlspecialchars((string)$w, ENT_QUOTES).'</td></tr>
-                                <tr style="color:#66CCFF"><td>Score&nbsp;<span class="glyphicon glyphicon-star" aria-hidden="true"></span></td><td>'.htmlspecialchars((string)$s, ENT_QUOTES).'</td></tr>';
+                            echo '<tr><td>Total Questions</td><td>'.htmlspecialchars((string)$qa, ENT_QUOTES).'</td></tr>
+                                <tr><td>Right Answer&nbsp;<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></td><td>'.htmlspecialchars((string)$r, ENT_QUOTES).'</td></tr> 
+                                <tr><td>Wrong Answer&nbsp;<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></td><td>'.htmlspecialchars((string)$w, ENT_QUOTES).'</td></tr>
+                                <tr><td>Score&nbsp;<span class="glyphicon glyphicon-star" aria-hidden="true"></span></td><td>'.htmlspecialchars((string)$s, ENT_QUOTES).'</td></tr>';
                         }
                         $q=mysqli_query($con,"SELECT * FROM `rank` WHERE `email`='$email' " )or die('Error157');
                         while($row=mysqli_fetch_array($q) )
                         {
                             $s=$row['score'];
-                            echo '<tr style="color:#990000"><td>Overall Score&nbsp;<span class="glyphicon glyphicon-stats" aria-hidden="true"></span></td><td>'.htmlspecialchars((string)$s, ENT_QUOTES).'</td></tr>';
+                            echo '<tr><td>Overall Score&nbsp;<span class="glyphicon glyphicon-stats" aria-hidden="true"></span></td><td>'.htmlspecialchars((string)$s, ENT_QUOTES).'</td></tr>';
                         }
                         echo '</table></div>';
                     }
@@ -186,9 +178,9 @@
                     if(@$_GET['q']== 2) 
                     {
                         $q=mysqli_query($con,"SELECT * FROM history WHERE email='$email' ORDER BY date DESC " )or die('Error197');
-                        echo  '<div class="panel title">
-                        <table class="table table-striped title1" >
-                        <tr style="color:black;"><td><center><b>S.N.</b></center></td><td><center><b>Quiz</b></center></td><td><center><b>Question Solved</b></center></td><td><center><b>Right</b></center></td><td><center><b>Wrong<b></center></td><td><center><b>Score</b></center></td>';
+                        echo  '<div class="panel title leaderboard-panel">
+                        <table class="table leaderboard-table title1" >
+                        <tr class="leaderboard-head"><td><center><b>S.N.</b></center></td><td><center><b>Quiz</b></center></td><td><center><b>Question Solved</b></center></td><td><center><b>Right</b></center></td><td><center><b>Wrong<b></center></td><td><center><b>Score</b></center></td>';
                         $c=0;
                         while($row=mysqli_fetch_array($q) )
                         {
@@ -209,23 +201,22 @@
 
                     if(@$_GET['q']== 3) 
                     {
-                        $q=mysqli_query($con,"SELECT * FROM `rank` ORDER BY `score` DESC " )or die('Error223');
-                        echo  '<div class="panel title"><div class="table-responsive">
-                        <table class="table table-striped title1" >
-                        <tr style="color:red"><td><center><b>Rank</b></center></td><td><center><b>Name</b></center></td><td><center><b>Email</b></center></td><td><center><b>Score</b></center></td></tr>';
+                        $q=mysqli_query($con,"SELECT r.email, r.score, u.name FROM `rank` r LEFT JOIN `user` u ON u.email = r.email ORDER BY r.score DESC LIMIT 3" )or die('Error223');
+                        echo  '<div class="panel title leaderboard-panel"><div class="table-responsive">
+                        <table class="table leaderboard-table title1" >
+                        <tr class="leaderboard-head"><td><center><b>Rank</b></center></td><td><center><b>Name</b></center></td><td><center><b>Email</b></center></td><td><center><b>Score</b></center></td></tr>';
                         $c=0;
-
-                        while($row=mysqli_fetch_array($q) )
+                        while($row=mysqli_fetch_assoc($q) )
                         {
                             $e=$row['email'];
                             $s=$row['score'];
-                            $q12=mysqli_query($con,"SELECT * FROM user WHERE email='$e' " )or die('Error231');
-                            while($row=mysqli_fetch_array($q12) )
-                            {
-                                $name=$row['name'];
-                            }
+                            $name = $row['name'] ? $row['name'] : $e;
                             $c++;
-                            echo '<tr><td style="color:black"><center><b>'.htmlspecialchars((string)$c, ENT_QUOTES).'</b></center></td><td><center>'.htmlspecialchars($name, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars($e, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars((string)$s, ENT_QUOTES).'</center></td></tr>';
+                            $rowClass = ($c === 1) ? ' class="is-top"' : '';
+                            echo '<tr'.$rowClass.'><td><center><b>'.htmlspecialchars((string)$c, ENT_QUOTES).'</b></center></td><td><center>'.htmlspecialchars($name, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars($e, ENT_QUOTES).'</center></td><td><center>'.htmlspecialchars((string)$s, ENT_QUOTES).'</center></td></tr>';
+                        }
+                        if ($c === 0) {
+                            echo '<tr><td colspan="4"><center>No rankings yet. Finish a quiz to appear here.</center></td></tr>';
                         }
                         echo '</table></div></div>';
                     }

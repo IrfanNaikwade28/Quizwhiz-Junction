@@ -1,10 +1,12 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    box-sizing: border-box;
 }
 body{
-    background: url('img/bgImg.jpg');
+    font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    color: #e6f1ff;
+    background: linear-gradient(135deg, #3C467B, #50589C, #636CCB) fixed;
     background-repeat: no-repeat;
     background-position: center;
     background-size:cover;
@@ -12,40 +14,41 @@ body{
     overflow: hidden;
 }
 main{
-    background-color: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
     display: flex;
     align-items: center;
     justify-content: center;
     width:100%;
     height:100%;
     column-gap: 5vw;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius:20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
     -webkit-border-radius:20px;
     -moz-border-radius:20px;
     -ms-border-radius:20px;
     -o-border-radius:20px;
+    border-radius:20px;
 }
 .logo{
     position: absolute;
-    top:15;
+    top:15px;
 }
 .logo img{
-    width:25vw;
+    width:220px;
     height:auto;
 }
 .sect1{
     display: grid;
     row-gap: 15px;
-    color:rgb(255, 255, 255);
+    color:#b8d0ff;
 }
 .sect1 h1{
-    line-height: 6vh;
+    line-height: 1.2;
 }
 .sect2{
-    width:30vw;
-    height:60vh;
+    width:36vw;
+    min-height:60vh;
 }
 .sect2 .anm{
     display: grid;
@@ -67,13 +70,13 @@ main{
     font-weight: 900;
     border:none;
     cursor:pointer;
-    width:10vw;
-    height:6vh;
-    background-color: rgb(77,118,255);
-    color:#ffff;
-    border-radius: 13px;
+    min-width: 140px;
+    height:48px;
+    background: linear-gradient(90deg, #636CCB, #6E8CFB);
+    color:#fff;
     -webkit-border-radius: 13px;
     -moz-border-radius: 13px;
     -ms-border-radius: 13px;
     -o-border-radius: 13px;
+    border-radius: 13px;
 }

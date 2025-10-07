@@ -41,17 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>Register | Online Quiz System</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="scripts/bootstrap/bootstrap.min.css">
 		<link rel="stylesheet" href="scripts/ionicons/css/ionicons.min.css">
 		<link rel="stylesheet" href="css/form.css">
-        <style type="text/css">
-            body{
-				background: url('image/bgImg.jpg');
-    			background-repeat: no-repeat;
-				background-position: center;
-				background-size:cover;
-                }
-          </style>
+        
 	</head>
 
 	<body>
@@ -60,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 				<div class="box-wrapper">				
 					<div class="box box-border">
 						<div class="box-body">
-							<center> <h5 style="font-family: Noto Sans;">Register to </h5><h4 style="font-family: Noto Sans;">Online Quiz System</h4></center><br>
+							<center><h5>Register to</h5><h4>Online Quiz System</h4></center><br>
 							<form method="post" action="register.php" enctype="multipart/form-data">
 								<?php if (!empty($error)): ?>
 									<div class="alert alert-danger" role="alert"><?php echo Helpers::e($error); ?></div>

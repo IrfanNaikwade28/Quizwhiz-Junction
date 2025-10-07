@@ -23,18 +23,9 @@ include_once 'database.php';
     <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="css/welcome.css">
     <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/font.css">
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
-    <style>
-        body {
-            background: url('image/bgImg.jpg');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            height: 100vh;
-        }
-    </style>
+    
 </head>
 
 <body>
@@ -66,21 +57,24 @@ include_once 'database.php';
                 <?php
 
                 if (@$_GET['q'] == 2) {
-                    $q = mysqli_query($con, "SELECT * FROM `rank` ORDER BY `score` DESC ") or die('Error223');
-                    echo  '<div class="panel title"><div class="table-responsive">
-                    <table class="table table-striped title1" >
-                    <tr style="color:red"><td><center><b>Rank</b></center></td><td><center><b>Name</b></center></td><td><center><b>Score</b></center></td></tr>';
+                    $q = mysqli_query($con, "SELECT * FROM `rank` ORDER BY `score` DESC LIMIT 3") or die('Error223');
+                    echo  '<div class="panel title leaderboard-panel"><div class="table-responsive">
+                    <table class="table leaderboard-table title1" >
+                    <tr class="leaderboard-head"><td><center><b>Rank</b></center></td><td><center><b>Name</b></center></td><td><center><b>Score</b></center></td></tr>';
                     $c = 0;
                     while ($row = mysqli_fetch_array($q)) {
                         $e = $row['email'];
                         $s = $row['score'];
-                        $q12 = mysqli_query($con, "SELECT * FROM user WHERE email='$e' ") or die('Error231');
-                        while ($row = mysqli_fetch_array($q12)) {
-                            $name = $row['name'];
-                            $college = $row['college'];
+                        // Default to email if user record missing
+                        $name = $e;
+                        $q12 = mysqli_query($con, "SELECT name, college FROM user WHERE email='$e' ") or die('Error231');
+                        if ($urow = mysqli_fetch_array($q12)) {
+                            $name = $urow['name'];
+                            $college = $urow['college'];
                         }
                         $c++;
-                        echo '<tr><td style="color:#99cc32"><center><b>' . htmlspecialchars((string)$c, ENT_QUOTES) . '</b></center></td><td><center>' . htmlspecialchars($e, ENT_QUOTES) . '</center></td><td><center>' . htmlspecialchars((string)$s, ENT_QUOTES) . '</center></td>';
+                        $rowClass = ($c === 1) ? ' class="is-top"' : '';
+                        echo '<tr'.$rowClass.'><td><center><b>' . htmlspecialchars((string)$c, ENT_QUOTES) . '</b></center></td><td><center>' . htmlspecialchars($name, ENT_QUOTES) . '</center></td><td><center>' . htmlspecialchars((string)$s, ENT_QUOTES) . '</center></td></tr>';
                     }
                     echo '</table></div></div>';
                 }
@@ -88,8 +82,8 @@ include_once 'database.php';
                 <?php
                 if (@$_GET['q'] == 1) {
                     $result = mysqli_query($con, "SELECT * FROM user") or die('Error');
-                    echo  '<div class="panel"><div class="table-responsive"><table class="table table-striped title1">
-                        <tr><td><center><b>S.N.</b></center></td><td><center><b>Name</b></center></td><td><center><b>College</b></center></td><td><center><b>Email</b></center></td><td><center><b>Action</b></center></td></tr>';
+                    echo  '<div class="panel leaderboard-panel"><div class="table-responsive"><table class="table leaderboard-table title1">
+                        <tr class="leaderboard-head"><td><center><b>S.N.</b></center></td><td><center><b>Name</b></center></td><td><center><b>College</b></center></td><td><center><b>Email</b></center></td><td><center><b>Action</b></center></td></tr>';
                     $c = 1;
                     while ($row = mysqli_fetch_array($result)) {
                         $name = $row['name'];
@@ -109,7 +103,7 @@ include_once 'database.php';
 
                 <?php
                 if (@$_GET['q'] == 4 && !(@$_GET['step'])) {
-                    echo '<div class="row"><span class="title1" style="margin-left:40%;font-size:30px;color:#fff;"><b>Enter Quiz Details</b></span><br /><br />
+                    echo '<div class="row"><span class="title1" style="margin-left:40%;font-size:30px;"><b>Enter Quiz Details</b></span><br /><br />
                         <div class="col-md-3"></div><div class="col-md-6">   
             <form class="form-horizontal title1" name="form" action="update.php?q=addquiz"  method="POST">
                             <fieldset>
@@ -231,7 +225,7 @@ include_once 'database.php';
                             <td><center>
                             <form method="post" action="update.php?q=rmquiz" style="display:inline" onsubmit="return confirm(\'Remove quiz and all related data?\')">
                                 <input type="hidden" name="eid" value="' . htmlspecialchars($eid, ENT_QUOTES) . '">
-                                <button type="submit" class="pull-right btn sub1" style="margin:0px;background:red;color:black"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Remove</b></span></button>
+                                <button type="submit" class="pull-right btn btn-danger sub1"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Remove</b></span></button>
                             </form>
                             </center></td></tr>';
                     }
