@@ -1,0 +1,23 @@
+# Docker ignore for Quizwhiz-Junction
+.git
+.gitignore
+node_modules
+vendor
+composer.lock
+Dockerfile
+Dockerfile.*
+docker-compose.yml
+.dockerignore
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+
+# Tests and local scripts
+/tests
+/scripts
+**/*.log
+**/.env
+**/.env.*

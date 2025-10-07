@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: quizwhiz-junction
+    env: docker
+    plan: free
+    dockerCommand: apache2-foreground
+    autoDeploy: true
+    envVars:
+      - key: DB_HOST
+        value: ${DB_HOST}
+      - key: DB_USER
+        value: ${DB_USER}
+      - key: DB_PASS
+        value: ${DB_PASS}
+      - key: DB_NAME
+        value: ${DB_NAME}
+      - key: USE_PASSWORD_HASHING
+        value: "true"
+      - key: ENABLE_CSRF
+        value: "false"
