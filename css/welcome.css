@@ -156,3 +156,48 @@ body {
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .panel { background: rgba(255,255,255,0.08) !important; }
 }
+
+/* Responsive adjustments: tablet and below (<= 991px) */
+@media (max-width: 991px) {
+  .panel {
+    margin: 16px !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
+  }
+
+  /* Allow horizontal scroll for wide tables on small screens */
+  .table-responsive {
+    overflow-x: auto !important;
+    -ms-overflow-style: auto;
+    /* Note: scrollbar-width not widely supported; intentionally omitted for compatibility */
+  }
+
+  /* Reduce motion/scale on touch */
+  .leaderboard-table tr:hover { transform: none; }
+
+  /* Touch-friendly controls */
+  .btn { padding: 12px 18px; font-size: 1rem; }
+  .table > thead > tr > th,
+  .table > tbody > tr > td,
+  .leaderboard-table tr td,
+  .leaderboard-table tr th { padding: 10px 12px; }
+
+  /* Center big titles that had inline margins in markup */
+  .title1 { margin-left: 0 !important; text-align: center; }
+  .title1 b { font-size: 24px; }
+}
+
+/* Phones and small tablets (<= 768px) */
+@media (max-width: 768px) {
+  .panel { margin: 12px !important; padding: 14px !important; }
+  .leaderboard-panel { padding: 12px !important; }
+  .title1, h1, h2 { word-break: break-word; }
+  .title1 b { font-size: 22px; }
+}
+
+/* Small phones (<= 576px) */
+@media (max-width: 576px) {
+  .panel { margin: 8px !important; padding: 12px !important; }
+  .btn { width: 100%; }
+  .title1 b { font-size: 20px; }
+}

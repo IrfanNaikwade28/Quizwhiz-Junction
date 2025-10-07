@@ -39,7 +39,7 @@ include_once 'database.php';
             <li><a href="dashboard.php?q=5">Remove Quiz</a></li>
             <li id="actionBtn"><a href="logout.php?q=welcome.php"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Log out</a></li>
         </ul>
-        <i class="fa-solid fa-bars menu-icon" id="menuIcon">dropdown</i>
+    <i class="fa-solid fa-bars menu-icon" id="menuIcon" aria-label="Menu" title="Menu"></i>
         <div class="menu-collapse">
             <ul>
                 <li <?php if (@$_GET['q'] == 1) echo 'class="active"'; ?>><a href="dashboard.php?q=1">User</a></li>

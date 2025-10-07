@@ -124,3 +124,26 @@ header .menu-collapse ul li .collapse-btn{
         display:none!important;
     }
 } 
+
+/* Tablet width alignment with requirement (<= 991px) */
+@media screen and (max-width: 991px){
+    header { height: auto; padding: 10px 12px; align-items: center; }
+    header ul { gap: 1.25rem; }
+    header .logo { width: auto; height: auto; }
+    header .logo img { width: 160px; max-width: 60vw; height: auto; }
+    header ul li .action-btn { width: auto; min-width: 140px; height: 44px; }
+}
+
+/* Phones (<= 768px): ensure collapsed menu is touch-friendly */
+@media screen and (max-width: 768px){
+    header .menu-collapse { right: 16px; top: 64px; padding: 24px 18px; }
+    header .menu-collapse ul { gap: 1rem; }
+    header .menu-collapse ul li .collapse-btn { width: 70vw; height: 48px; }
+}
+
+/* Small phones (<= 576px) */
+@media screen and (max-width: 576px){
+    header .menu-collapse { left: 12px; right: 12px; width: auto; }
+    #actionBtn { right: 12px; top: 12px; }
+    header .menu-icon { font-size: 1.6rem; }
+}

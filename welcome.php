@@ -42,7 +42,7 @@
         <li <?php if(@$_GET['q']==3) echo'class="active"'; ?>> <a href="welcome.php?q=3"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;Ranking</a></li>
         <li id="actionBtn"><a href="logout.php?q=welcome.php"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Log out</a></li>
         </ul>
-        <i class="fa-solid fa-bars menu-icon" id="menuIcon">dropdown</i>
+    <i class="fa-solid fa-bars menu-icon" id="menuIcon" aria-label="Menu" title="Menu"></i>
         <div class="menu-collapse">
             <ul>
                 <li <?php if(@$_GET['q']==1) echo'class="active"'; ?> ><a href="welcome.php?q=1"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Home<span class="sr-only">(current)</span></a></li>

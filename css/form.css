@@ -489,6 +489,29 @@ section .container {
   margin-bottom: 30px;
 }
 
+/* Responsive: tablet and below (<= 991px) */
+@media (max-width: 991px) {
+  section.login .container,
+  section.login.first.grey .container {
+    padding: 24px 12px;
+  }
+  .box-wrapper { width: 92%; max-width: 520px; }
+  .btn { padding: 12px 18px; font-size: 1rem; }
+  .form-control { height: 48px; font-size: 1rem; }
+}
+
+/* Phones and small tablets (<= 768px) */
+@media (max-width: 768px) {
+  h4 { font-size: 22px; }
+  .box .box-body { padding: 22px; }
+}
+
+/* Small phones (<= 576px) */
+@media (max-width: 576px) {
+  .box .box-body { padding: 18px; }
+  .btn.btn-lg { padding-left: 28px; padding-right: 28px; padding-top: 12px; padding-bottom: 12px; }
+}
+
 @media screen and (max-width: 768px) {
   .with-sidebar .sidebar {
     display: none;
