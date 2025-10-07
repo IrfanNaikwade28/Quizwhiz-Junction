@@ -25,7 +25,7 @@ if (isset($_GET['demail']) && ($role === 'admin')) {
     if ($demail !== '') {
         $con->begin_transaction();
         try {
-            $db->run('DELETE FROM rank WHERE email = ?', [$demail]);
+            $db->run('DELETE FROM `rank` WHERE `email` = ?', [$demail]);
             $db->run('DELETE FROM history WHERE email = ?', [$demail]);
             $db->run('DELETE FROM user WHERE email = ?', [$demail]);
             $con->commit();
@@ -129,7 +129,7 @@ if ((isset($_GET['q']) && $_GET['q'] === 'addqns') && ($role === 'admin')) {
             $con->rollback();
         }
     }
-    header('Location: dashboard.php?q=0');
+    header('Location: dashboard.php?q=1');
     exit;
 }
 
@@ -189,12 +189,12 @@ if ((isset($_GET['q']) && $_GET['q'] === 'quiz') && (isset($_GET['step']) && (in
     if ($role !== 'admin') {
         $row = $db->fetchOne('SELECT score FROM history WHERE eid = ? AND email = ?', [$eid, $email]);
         $s = (int)($row['score'] ?? 0);
-        $rankRow = $db->fetchOne('SELECT score FROM rank WHERE email = ?', [$email]);
+    $rankRow = $db->fetchOne('SELECT `score` FROM `rank` WHERE `email` = ?', [$email]);
         if (!$rankRow) {
-            $db->run('INSERT INTO rank(email, score, time) VALUES(?,?, NOW())', [$email, $s]);
+            $db->run('INSERT INTO `rank`(`email`, `score`, `time`) VALUES(?, ?, NOW())', [$email, $s]);
         } else {
             $new = (int)$rankRow['score'] + $s;
-            $db->run('UPDATE rank SET score = ?, time = NOW() WHERE email = ?', [$new, $email]);
+            $db->run('UPDATE `rank` SET `score` = ?, `time` = NOW() WHERE `email` = ?', [$new, $email]);
         }
     }
     header('Location: welcome.php?q=result&eid='.urlencode($eid));
@@ -215,11 +215,11 @@ if ((isset($_GET['q']) && $_GET['q'] === 'quizre') && (isset($_GET['step']) && (
         $row = $db->fetchOne('SELECT score FROM history WHERE eid = ? AND email = ? FOR UPDATE', [$eid, $email]);
         $s = (int)($row['score'] ?? 0);
         $db->run('DELETE FROM history WHERE eid = ? AND email = ?', [$eid, $email]);
-        $rank = $db->fetchOne('SELECT score FROM rank WHERE email = ? FOR UPDATE', [$email]);
+    $rank = $db->fetchOne('SELECT `score` FROM `rank` WHERE `email` = ? FOR UPDATE', [$email]);
         if ($rank) {
             $sun = (int)$rank['score'] - $s;
             if ($sun < 0) $sun = 0;
-            $db->run('UPDATE rank SET score = ?, time = NOW() WHERE email = ?', [$sun, $email]);
+            $db->run('UPDATE `rank` SET `score` = ?, `time` = NOW() WHERE `email` = ?', [$sun, $email]);
         }
         $con->commit();
     } catch (Throwable $e) {

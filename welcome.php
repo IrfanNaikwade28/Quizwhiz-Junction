@@ -172,7 +172,7 @@
                                 <tr style="color:red"><td>Wrong Answer&nbsp;<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></td><td>'.htmlspecialchars((string)$w, ENT_QUOTES).'</td></tr>
                                 <tr style="color:#66CCFF"><td>Score&nbsp;<span class="glyphicon glyphicon-star" aria-hidden="true"></span></td><td>'.htmlspecialchars((string)$s, ENT_QUOTES).'</td></tr>';
                         }
-                        $q=mysqli_query($con,"SELECT * FROM rank WHERE  email='$email' " )or die('Error157');
+                        $q=mysqli_query($con,"SELECT * FROM `rank` WHERE `email`='$email' " )or die('Error157');
                         while($row=mysqli_fetch_array($q) )
                         {
                             $s=$row['score'];
@@ -209,7 +209,7 @@
 
                     if(@$_GET['q']== 3) 
                     {
-                        $q=mysqli_query($con,"SELECT * FROM rank ORDER BY score DESC " )or die('Error223');
+                        $q=mysqli_query($con,"SELECT * FROM `rank` ORDER BY `score` DESC " )or die('Error223');
                         echo  '<div class="panel title"><div class="table-responsive">
                         <table class="table table-striped title1" >
                         <tr style="color:red"><td><center><b>Rank</b></center></td><td><center><b>Name</b></center></td><td><center><b>Email</b></center></td><td><center><b>Score</b></center></td></tr>';

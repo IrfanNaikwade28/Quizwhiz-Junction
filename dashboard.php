@@ -66,7 +66,7 @@ include_once 'database.php';
                 <?php
 
                 if (@$_GET['q'] == 2) {
-                    $q = mysqli_query($con, "SELECT * FROM rank  ORDER BY score DESC ") or die('Error223');
+                    $q = mysqli_query($con, "SELECT * FROM `rank` ORDER BY `score` DESC ") or die('Error223');
                     echo  '<div class="panel title"><div class="table-responsive">
                     <table class="table table-striped title1" >
                     <tr style="color:red"><td><center><b>Rank</b></center></td><td><center><b>Name</b></center></td><td><center><b>Score</b></center></td></tr>';

@@ -14,7 +14,7 @@
     </style>
   </head>
   <body>
-    <main>
+    <main class="glass">
         <div class="logo">
             <img src="image/Logo.png" alt="">
         </div>
